@@ -1,4 +1,5 @@
 import React from 'react';
+import TextData from './TableData/textData';
 
 interface TableRowProps {
     data: any;
@@ -9,13 +10,21 @@ interface TableRowProps {
 const TableRow: React.FC<TableRowProps> = ({ data, index, setGames }) => {
     return (
         <tr>
-            <td className="border border-black p-2">{data.name}</td>
-            <td className="border border-black p-2">{data.price}</td>
-            <td className="border border-black p-2">{data.image}</td>
-            <td className="border border-black p-2">{data.category}</td>
-            <td className="border border-black p-2">{data.key_features}</td>
-            <td className="border border-black p-2">{data.brand_name}</td>
-            <td className="border border-black p-2">{data.description}</td>
+            <td className="border border-[#ccc]">
+                <TextData keyName="name" value={data.name} setGames={setGames} />
+            </td>
+            <td className="border border-[#ccc]">
+                <TextData keyName="price" value={data.price} setGames={setGames} />
+            </td>
+            <td className="border border-[#ccc] p-2">{data.image}</td>
+            <td className="border border-[#ccc] p-2">{data.category}</td>
+            <td className="border border-[#ccc] p-2">{data.key_features}</td>
+            <td className="border border-[#ccc]">
+                <TextData keyName="brand_name" value={data.brand_name} setGames={setGames} />
+            </td>
+            <td className="border border-[#ccc]">
+                <TextData keyName="description" value={data.description} setGames={setGames} />
+            </td>
         </tr>
     );
 };
