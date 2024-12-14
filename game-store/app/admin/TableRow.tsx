@@ -11,19 +11,19 @@ const TableRow: React.FC<TableRowProps> = ({ data, index, setGames }) => {
     return (
         <tr>
             <td className="border border-[#ccc]">
-                <TextData keyName="name" value={data.name} setGames={setGames} />
+                <TextData keyName="name" value={data.name} id={data._id.$oid} setGames={setGames} />
             </td>
             <td className="border border-[#ccc]">
-                <TextData keyName="price" value={data.price} setGames={setGames} />
+                <TextData keyName="price" value={data.price} id={data._id.$oid} setGames={setGames} />
             </td>
             <td className="border border-[#ccc] p-2">{data.image}</td>
             <td className="border border-[#ccc] p-2">{data.category}</td>
             <td className="border border-[#ccc] p-2">{data.key_features}</td>
             <td className="border border-[#ccc]">
-                <TextData keyName="brand_name" value={data.brand_name} setGames={setGames} />
+                <TextData keyName="brand_name" value={data.brand_name} id={data._id.$oid} setGames={setGames} />
             </td>
             <td className="border border-[#ccc]">
-                <TextData keyName="description" value={data.description} setGames={setGames} />
+                <TextData keyName="description" value={data.description} id={data._id.$oid} setGames={setGames} />
             </td>
         </tr>
     );
