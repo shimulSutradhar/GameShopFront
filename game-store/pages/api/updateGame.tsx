@@ -3,14 +3,18 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === 'POST') {
         const gameData = req.body;
-
+        const url = `http://127.0.0.1:8000/update_product/${gameData._id}`;
+        console.log('gameData:', gameData.key, gameData.value, gameData._id);
         try {
-            const response = await fetch('https://another-api-endpoint.com/games', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(gameData),
+                body: JSON.stringify({
+                    key: gameData.key,
+                    value: gameData.value
+                }),
             });
 
             if (!response.ok) {
@@ -18,7 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             const result = await response.json();
-            res.status(200).json({ message: 'Data inserted successfully', data: result });
+            console.log('Success:', url, gameData);
+            res.status(200).json({ message: 'Data inserted successfully'});
         } catch (error) {
             const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
             res.status(500).json({ message: errorMessage });

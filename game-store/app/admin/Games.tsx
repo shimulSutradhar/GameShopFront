@@ -1,20 +1,10 @@
 "use client"
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import editIcon from '../../public/edit.png';
 import TableRow from './TableRow';
 
-
-interface Game {
-    id: number;
-    title: string;
-    genre: string;
-    releaseDate: string;
-}
-
 const Games: React.FC = () => {
-    const [games, setGames] = useState<Game[]>([]);
+    const [games, setGames] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -46,6 +36,11 @@ const Games: React.FC = () => {
         return <div>{error}</div>;
     }
 
+
+    // useEffect(() => {
+    //     console.log("CHECKING NEW UPDATE: ", games)
+    // }, [games])
+
     return (
         <div className='mt-[60px]'>
             <h1>Games List</h1>
@@ -64,7 +59,7 @@ const Games: React.FC = () => {
                 </thead>
                 <tbody>
                     {games.map((game, index) => (
-                        <TableRow key={index} data={game} index={index} setGames={setGames}/>
+                        <TableRow key={index} data={game} index={index} games={games} setGames={setGames}/>
                     ))}
                 </tbody>
             </table>

@@ -1,25 +1,16 @@
-import React, { useState } from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 
 interface TextDataProps {
     keyName: string;
-    value: string | number;
+    index: number;
     id: string;
+    games: any
     setGames: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const TextData: React.FC<TextDataProps> = ({ keyName, value, id, setGames }) => {
-    const [newValue, setNewValue] = useState<string | number>(value);
-    const handleChange = (newValue: string | number) => {
-        setGames((prev) =>
-            prev.map((game) => {
-                console.log('game._id.$oid', game._id.$oid, id)
-                if (game._id.$oid === id) {
-                    return { ...game, [keyName]: newValue };
-                }
-                return game;
-            })
-        );
-    };
+const TextData: React.FC<TextDataProps> = ({ keyName, index, id, games, setGames }) => {
+    const [newValue, setNewValue] = useState<string | number>(games[index][keyName]);
 
     const updateValue = async () => {
         try {
@@ -29,9 +20,9 @@ const TextData: React.FC<TextDataProps> = ({ keyName, value, id, setGames }) => 
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    keyName,
+                    key: keyName,
                     value: newValue,
-                    _id: 'some-id', // Replace 'some-id' with the actual ID
+                    _id: id,
                 }),
             });
 
@@ -46,9 +37,25 @@ const TextData: React.FC<TextDataProps> = ({ keyName, value, id, setGames }) => 
         }
     };
 
+    const handleChange = (newValue: string | number) => {
+        const updatedGames = games.map((game:any) => {
+            if (game._id.$oid === id) {
+                return { ...game, [keyName]: newValue };
+            }
+            return game;
+        });
+
+        updateValue();
+        setGames(updatedGames)
+    };
+
+    useEffect(() => {
+		setNewValue(games[index][keyName]);
+	}, [games[index][keyName]]);
+
     return (
         <input
-            type={typeof value === 'string' ? "text" : "number"}
+            type={typeof games[index][keyName] === 'string' ? "text" : "number"}
             value={newValue}
             onChange={(event: any) => setNewValue(event.target.value)}
             style={{
@@ -59,13 +66,13 @@ const TextData: React.FC<TextDataProps> = ({ keyName, value, id, setGames }) => 
             className="draggable"
             onKeyDown={(event: any) => {
                 if (event.key === 'Enter') {
-                    console.log('Enter key pressed')
+                    console.log("ENTER PRESSED")
                     handleChange(newValue)
                     event.target.blur()
                 }
             }}
-            onBlur={() => {
-                setNewValue(value)
+            onBlur={(event:any) => {
+                setNewValue(games[index][keyName])
             }}
         />
     );
