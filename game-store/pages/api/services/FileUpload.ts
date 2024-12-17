@@ -30,6 +30,7 @@ class imageUploader implements IUpload {
       ContentType: file.type,
     };
 
+    // console.log("bucketParams:", bucketParams);
     await this.s3Client.putObject(bucketParams).then((value) => {
       console.log("value", value);
     }).catch(err=> console.log("error:", err));

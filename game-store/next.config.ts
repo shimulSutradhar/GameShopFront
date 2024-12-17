@@ -17,6 +17,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/upload",
+        destination: "http://127.0.0.1:8000/upload_image",
+      },
+    ]
+  },
 };
 
 export default nextConfig;

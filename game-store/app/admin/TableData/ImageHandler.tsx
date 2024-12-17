@@ -34,7 +34,7 @@ const ImageHandler: React.FC<ImageHandlerProps> = ({ keyName, index, id, games, 
         }, 1000);
     };
 
-    const handleImageChange = (e: any) => {
+    const handleImageChange = async (e: any) => {
         const file = e.target.files[0];
         if (!file) {
             return false;
@@ -44,9 +44,17 @@ const ImageHandler: React.FC<ImageHandlerProps> = ({ keyName, index, id, games, 
             return false;
         }
 
+        // console.log("file:", file);
         const formData = new FormData();
-        formData.append("image", file);
-        setImageData(formData);
+        formData.append('file', file);
+
+
+        const response = await fetch('/api/upload', {
+            method: 'POST',
+            body: formData,
+        });
+
+        setImageData(file);
 
         file?.arrayBuffer().then(async (arrayBuffer: ArrayBuffer) => {
             const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
@@ -58,19 +66,24 @@ const ImageHandler: React.FC<ImageHandlerProps> = ({ keyName, index, id, games, 
     const handleUpload = async () => {
         setIsUploading(true);
         try {
-            const response = await fetch('/api/ImageUpload', {
-                method: 'POST',
-                body: imageData,
-            });
-            if (response.ok) {
-                const data = await response.json();
-                const protocol = window.location.protocol;
-                const hostAddress = `${protocol}//${window.location.hostname}/api/public/games`;
-                const serverImageURLWithHostName = hostAddress + data.newImage.newFilename;
-                setTempImageUrl(serverImageURLWithHostName);
-            } else {
-                console.error("Failed to upload image.");
-            }
+            // const formData = new FormData();
+            // formData.append('file', imageData);
+
+
+            // const response = await fetch('/api/upload', {
+            //     method: 'POST',
+            //     body: imageData,
+            // });
+
+            // if (response.ok) {
+            //     // const data = await response.json();
+            //     // const protocol = window.location.protocol;
+            //     // const hostAddress = `/api/public/games`;
+            //     // const serverImageURLWithHostName = hostAddress + data.newImage.newFilename;
+            //     // setTempImageUrl(serverImageURLWithHostName);
+            // } else {
+            //     console.error("Failed to upload image.");
+            // }
         } catch (error) {
             console.error('Error:', error);
         }

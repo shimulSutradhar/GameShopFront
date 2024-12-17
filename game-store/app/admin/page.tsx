@@ -11,6 +11,8 @@ const AdminPanel: React.FC = () => {
                 whichPage={whichPage}
                 setWhichPage={setWhichPage}
             />
+
+            <div className='mt-[100px]'></div> 
             <Games />
         </div>
     );
