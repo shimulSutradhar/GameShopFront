@@ -166,7 +166,7 @@ const ImportNewRow: React.FC = () => {
                     </div>
 
                     <div className='flex mt-2'>
-                        <div className='w-[100px]'>Price: </div>
+                        <div className='w-[100px]'>Key Features: </div>
                         <input
                             type="text"
                             value={keyFeatures}
@@ -176,7 +176,7 @@ const ImportNewRow: React.FC = () => {
                     </div>
 
                     <div className='flex mt-2'>
-                        <div className='w-[100px]'>Price: </div>
+                        <div className='w-[100px]'>Brand Name: </div>
                         <input
                             type="text"
                             value={brandName}
@@ -186,7 +186,7 @@ const ImportNewRow: React.FC = () => {
                     </div>
 
                     <div className='flex mt-2'>
-                        <div className='w-[100px]'>Price: </div>
+                        <div className='w-[100px]'>Description: </div>
                         <input
                             type="text"
                             value={description}
