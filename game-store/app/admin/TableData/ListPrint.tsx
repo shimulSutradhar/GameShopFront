@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ListPrintProps {
-    list: string[];
+    list: string;
 }
 
 const ListPrint: React.FC<ListPrintProps> = ({ list }) => {

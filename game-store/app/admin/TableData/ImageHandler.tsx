@@ -44,51 +44,41 @@ const ImageHandler: React.FC<ImageHandlerProps> = ({ keyName, index, id, games, 
             return false;
         }
 
-        // console.log("file:", file);
-        const formData = new FormData();
-        formData.append('file', file);
+        const fileExtension = file.name.split('.').pop();
+        const randomFileName = `${Math.random().toString(36).substring(2, 15)}-${Date.now()}.${fileExtension}`;
 
+        const formData = new FormData();
+        formData.append('file', new File([file], randomFileName, { type: file.type }));
 
         const response = await fetch('/api/upload', {
             method: 'POST',
             body: formData,
         });
 
-        setImageData(file);
-
-        file?.arrayBuffer().then(async (arrayBuffer: ArrayBuffer) => {
-            const blob = new Blob([new Uint8Array(arrayBuffer)], { type: file.type });
-            const url = URL.createObjectURL(blob);
-            setTempImageUrl(url);
-        });
+        setTempImageUrl(`https://thesis-gamestopre.nyc3.digitaloceanspaces.com/${randomFileName}`);
     };
 
     const handleUpload = async () => {
-        setIsUploading(true);
-        try {
-            // const formData = new FormData();
-            // formData.append('file', imageData);
+        const response = await fetch('/api/updateGame', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                key: keyName,
+                value: tempImageUrl,
+                _id: id,
+            }),
+        });
+        
+        const updatedGames = games.map((game:any) => {
+            if (game._id.$oid === id) {
+                return { ...game, [keyName]: tempImageUrl };
+            }
+            return game;
+        });
 
-
-            // const response = await fetch('/api/upload', {
-            //     method: 'POST',
-            //     body: imageData,
-            // });
-
-            // if (response.ok) {
-            //     // const data = await response.json();
-            //     // const protocol = window.location.protocol;
-            //     // const hostAddress = `/api/public/games`;
-            //     // const serverImageURLWithHostName = hostAddress + data.newImage.newFilename;
-            //     // setTempImageUrl(serverImageURLWithHostName);
-            // } else {
-            //     console.error("Failed to upload image.");
-            // }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-
-        setIsUploading(false); // Reset uploading state
+        setGames(updatedGames)
         setOpen(false);
     }
 

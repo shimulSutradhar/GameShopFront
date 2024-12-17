@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
+        source: "/api/add_product",
+        destination: "http://127.0.0.1:8000/add_product",
+      },
+      {
         source: "/api/upload",
         destination: "http://127.0.0.1:8000/upload_image",
       },

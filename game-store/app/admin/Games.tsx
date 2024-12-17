@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import TableRow from './TableRow';
+import ImportNewRow from './TableData/ImportNewRow';
 
 const Games: React.FC = () => {
     const [games, setGames] = useState<any[]>([]);
@@ -37,13 +38,12 @@ const Games: React.FC = () => {
     }
 
 
-    // useEffect(() => {
-    //     console.log("CHECKING NEW UPDATE: ", games)
-    // }, [games])
-
     return (
-        <div className='mt-[60px]'>
-            <h1>Games List</h1>
+        <div className='mt-[50px]'>
+            <div className='mb-[20px] w-[100%] flex justify-center items-center'>
+                <ImportNewRow />
+            </div>
+            
             
             <table className="w-full border-collapse">
                 <thead>
