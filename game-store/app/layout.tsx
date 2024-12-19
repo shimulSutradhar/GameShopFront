@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import Navigation from "./navigation/navigation";
+import Footer from "./navigation/Footer";
+import { MyProvider } from "../context/MyContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +26,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
@@ -31,10 +34,13 @@ export default function RootLayout({
       >
         <div className="flex justify-center">
           <div className="container">
-            <Navigation isLoggedIn={true} />
-            <AppRouterCacheProvider>
-              {children}
-            </AppRouterCacheProvider>
+            <MyProvider>
+              <Navigation isLoggedIn={true} />
+              <AppRouterCacheProvider>
+                {children}
+              </AppRouterCacheProvider>
+              <Footer />
+            </MyProvider>
           </div>
         </div>
       </body>
