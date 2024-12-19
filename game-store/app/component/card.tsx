@@ -1,12 +1,12 @@
 "use client";
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface CardProps {
     gameData: any;
 }
 
-const Card: React.FC<CardProps> = ({ gameData }) => {
+const Card: React.FC<CardProps> = ({ gameData }) => {    
     return (
         <div className="p-4 bg-white w-[100%]">
             <div className='flex justify-center mb-4 h-[250px]'>

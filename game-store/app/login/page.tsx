@@ -7,31 +7,30 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState('');
     const [users, setUsers] = useState([]);
     const [validUser, setValidUser] = useState(true);
-    const { setId } = useContext(MyContext);
 
     useEffect(() => {
-            const fetchGames = async () => {
-                try {
-                    const response = await fetch('/api/get_users');
-                    const data = await response.json();
-                    setUsers(data);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                } catch (err) {
-                    console.log('Failed to fetch games');
+        const fetchGames = async () => {
+            try {
+                const response = await fetch('/api/users');
+                const data = await response.json();
+                console.log("Checkign user data: ", data);
+                setUsers(data);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            };
-            fetchGames();
-        }, []);
+            } catch (err) {
+                console.log('Failed to fetch games');
+            }
+        };
+        fetchGames();
+    }, []);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        const user:any = users.find((user:any) => user.email === email && user.password === password);
+        const user: any = users.find((user: any) => user.email === email && user.password === password);
         if (user) {
-            console.log("Checking user: ", user._id.$oid);
-            setId(user._id.$oid);
-            
+            localStorage.setItem('userId', user._id.$oid);
+
             window.location.href = '/';
         } else {
             setValidUser(false);

@@ -28,8 +28,12 @@ const nextConfig: NextConfig = {
         destination: "http://127.0.0.1:8000/upload_image",
       },
       {
-        source: "/api/get_users",
+        source: "/api/users",
         destination: "http://127.0.0.1:8000/users",
+      },
+      {
+        source: "/api/add_order",
+        destination: "http://127.0.0.1:8000/add_order",
       },
     ]
   },

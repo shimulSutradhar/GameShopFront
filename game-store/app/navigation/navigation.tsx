@@ -4,19 +4,14 @@ import Link from 'next/link';
 import { MyContext } from '@/context/MyContext';
 
 const Navigation = () => {
-    const {id, setId} = useContext(MyContext);
     const [isLoggedIn, setIsLoggedIn] = React.useState(false);
     
     useEffect(() => {
-        setTimeout(() => {
-        console.log("Printing id: ", id);
-        },  1000);
-        if (id === '') {
-            setIsLoggedIn(false);
-        } else {
+        const userId = localStorage.getItem('userId');
+        if (userId) {
             setIsLoggedIn(true);
         }
-    }, [id]);
+    }, [localStorage.getItem('userId')]);
 
     return (
         <nav className="bg-gray-800 p-4 flex justify-between items-center">

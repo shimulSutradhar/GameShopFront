@@ -5,14 +5,21 @@ import { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MyContext } from '@/context/MyContext';
+import OrderPopUp from './OrderPopUp';
 
 const GamePage = () => {
-    const { id, setId } = useContext(MyContext);
     const router = useRouter();
     const { slug } = useParams() as { slug: string };
     const sanitizedSlug = slug.split('%')[0];
-    const [gameData, setGameData] = useState<any>({});
+    const [gameData, setGameData] = useState<any>(null);
     const [keyFeatures, setKeyFeatures] = useState<any[]>([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    useEffect(() => {
+            const userId = localStorage.getItem('userId');
+            if (userId) {
+                setIsLoggedIn(true);
+            }
+        }, [localStorage.getItem('userId')]);
 
 
     useEffect(() => {
@@ -42,6 +49,8 @@ const GamePage = () => {
     }, [sanitizedSlug]);
 
     return (
+        <>
+        {gameData  && 
         <div className='py-8'>
             <h1 className='px-4 text-center text-4xl mb-4'>{gameData.name}</h1>
 
@@ -67,7 +76,7 @@ const GamePage = () => {
                             <h2><b>Price: </b></h2>
                             <p>{gameData.price}</p>
                         </div>
-                        {id === '' ?
+                        {!isLoggedIn ?
                             <Link
                                 href={"/login"}
                             >
@@ -76,9 +85,7 @@ const GamePage = () => {
                                 </button>
                             </Link>
                             :
-                            <button className='mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700'>
-                                Buy Now
-                            </button>
+                            <OrderPopUp id={gameData._id.$oid} />
                         }
 
                     </div>
@@ -89,6 +96,8 @@ const GamePage = () => {
                 <p>{gameData.description}</p>
             </div>
         </div>
+        }
+        </>
     );
 };
 
