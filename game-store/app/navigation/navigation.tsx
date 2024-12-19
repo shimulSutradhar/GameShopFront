@@ -1,7 +1,23 @@
-import React from 'react';
+"use client";
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
+import { MyContext } from '@/context/MyContext';
 
-const Navigation: React.FC<{ isLoggedIn: boolean }> = ({ isLoggedIn }) => {
+const Navigation = () => {
+    const {id, setId} = useContext(MyContext);
+    const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+    
+    useEffect(() => {
+        setTimeout(() => {
+        console.log("Printing id: ", id);
+        },  1000);
+        if (id === '') {
+            setIsLoggedIn(false);
+        } else {
+            setIsLoggedIn(true);
+        }
+    }, [id]);
+
     return (
         <nav className="bg-gray-800 p-4 flex justify-between items-center">
             <div className="text-white">

@@ -5,9 +5,9 @@ import { MyProvider } from "../context/MyContext";
 export default function Home() {
   return (
     <div>
-      <MyProvider>
+      {/* <MyProvider> */}
         <HomePage />
-      </MyProvider>
+      {/* </MyProvider> */}
     </div>
   );
 }

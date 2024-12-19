@@ -13,7 +13,7 @@ interface MyProviderProps {
 }
 
 export const MyProvider: React.FC<MyProviderProps> = ({ children }) => {
-    const [id, setId] = useState<string>('Tuki');
+    const [id, setId] = useState<string>('');
 
     return (
         <MyContext.Provider value={{ id, setId }}>
